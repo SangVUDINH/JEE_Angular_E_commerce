@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+D:\BUREAU\PROJET_EXTERNE\SPRING_BOOT\JEE_Angular_JWT_E_commerce\.metadata\.plugins\org.eclipse.jdt.core
