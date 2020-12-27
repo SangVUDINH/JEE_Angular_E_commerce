@@ -1,0 +1,45 @@
+package com.example.light_commerce;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.example.light_commerce.dao.CategoryRepository;
+import com.example.light_commerce.dao.ProductRepository;
+import com.example.light_commerce.entities.Category;
+import com.example.light_commerce.entities.Product;
+
+import net.bytebuddy.utility.RandomString;
+
+@SpringBootApplication
+public class LightCommerceApplication implements CommandLineRunner {
+
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	public static void main(String[] args) {
+		SpringApplication.run(LightCommerceApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		
+		Category cate1 = new Category(null,"Ordinateur1",null,null); 
+		Category cate2 = new Category(null,"Ordinateur2",null,null); 
+		Category cate3 = new Category(null,"Ordinateur3",null,null); 
+		
+		categoryRepository.save(cate1 );
+		categoryRepository.save(cate2 );
+		categoryRepository.save(cate3 );
+		
+		categoryRepository.findAll().forEach(c -> {
+			Product p=new Product();
+			p.setName(RandomString.make(18));
+		});
+	}
+
+}

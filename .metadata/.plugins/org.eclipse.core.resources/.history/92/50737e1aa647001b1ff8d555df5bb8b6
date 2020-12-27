@@ -1,0 +1,10 @@
+package com.example.light_commerce.web;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class CatalogueController {
+	
+	
+	private ProductRepository productRepository;
+}

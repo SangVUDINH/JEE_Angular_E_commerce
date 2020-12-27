@@ -1,0 +1,9 @@
+package com.example.light_commerce.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.light_commerce.entities.Category;
+
+public interface CategoryRepository extends JpaRepository<Category,Long> {
+
+}

@@ -1,0 +1,18 @@
+package com.example.light_commerce.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
+
+import com.example.light_commerce.entities.Product;
+
+
+@RepositoryRestResource
+public interface ProductRepository extends JpaRepository<Product,Long> {
+	
+	@RestResource(path="/selectedProducts")
+	public List<Product> findBySelectedIsTrue();
+
+}
