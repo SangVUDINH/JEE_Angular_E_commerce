@@ -1,6 +1,7 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
 import { CatalogueService } from '../services/catalogue.service';
 
 @Component({
@@ -16,19 +17,21 @@ export class ProductComponent implements OnInit {
   private selectedFiles: any;
   public progess: number = 0;
   private currentFileUpload: any;
+  private currentTimeStamp: number=0;
 
   title: string | undefined;
 
   constructor(private catalogueService: CatalogueService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authentificationService:AuthenticationService
   ) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(
       value => {
         if (value instanceof NavigationEnd) {
-          let url = value.url;
+        
           let p1 = this.activatedRoute.snapshot.params.p1;
           if (p1 == 1) {
 
@@ -102,8 +105,9 @@ export class ProductComponent implements OnInit {
           this.progess = Math.round(100 * event.loaded / event.total);
         }
         else if (event instanceof HttpResponse) {
-          // to do la MAJ le product en particulier
-          this.getProducts("/products/search/selectedProducts");
+          // la MAJ le product en particulier, probleme de cache
+          //solution => image ID+ timestamp
+          this.currentTimeStamp= Date.now();
 
         }
       }, error => {
@@ -113,5 +117,22 @@ export class ProductComponent implements OnInit {
 
     this.selectedFiles = undefined;
   }
+
+  getTS(){
+    return this.currentTimeStamp;
+  }
+
+  getHost(){
+    return this.catalogueService.host;
+  }
+
+  isAdmin(){
+    return this.authentificationService.isAdmin();
+  }
+
+  onAddProductToCaddy(p:any){
+
+  }
+  
 
 }

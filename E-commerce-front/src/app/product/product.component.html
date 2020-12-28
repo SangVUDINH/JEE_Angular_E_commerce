@@ -1,5 +1,7 @@
 <div *ngIf="products">
-    <div><h3>{{title}}</h3></div>
+    <div>
+        <h3>{{title}}</h3>
+    </div>
     <div *ngFor="let p of products._embedded.products">
         <div class="col-md-6">
             <div class="panel panel-default">
@@ -7,29 +9,54 @@
                     {{p.name}}
                 </div>
                 <div class="panel-body">
-                    <tr>
-                        <td rowspan="3">
-                            <img src="http://localhost:8080/photoProduct/{{p.id}}" alt="">
-                            <p>
-                                <button (click)="onEditPhoto(p)">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </button>
-                            </p>
-                            <p *ngIf="editPhoto && currentProduct == p">
-                                <input type="file" (change)="onSelectedFile($event)">
-                                <button class="btn btn-success" (click)="uploadPhoto()">Upload</button>
-                                {{progess}}
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>{{p.description}}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>{{p.currentPrice | number:'0.2'}}</td>
-                    </tr>
+                    <img class="img-thumbnail img-rounded btn" height="150"
+                        src="{{getHost()+'/photoProduct/'+p.id+'?ts='+getTS()}}" alt="">
+                    <div *ngIf="isAdmin()">
+                        <p>
+                            <button (click)="onEditPhoto(p)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                        </p>
+                        <p *ngIf="editPhoto && currentProduct == p">
+                            <input type="file" (change)="onSelectedFile($event)">
+                            <button class="btn btn-success" (click)="uploadPhoto()">Upload</button>
+                            {{progess}}
+                        </p>
+                    </div>
+                    <div>
+                        {{p.description}}
+                    </div>
+                    <div>
+                        <label>{{p.currentPrice | number:'0.2'}}</label>
+                    </div>
+
+                    <div>
+                        <span *ngIf="p.promotion">
+                            <img src="" alt="" class="img-thumbnail img-circle" height="30">
+                        </span>
+    
+                        <span *ngIf="p.selected">
+                            <img src="" alt="" class="img-thumbnail img-circle" height="30">
+                        </span>
+    
+                        <span *ngIf="p.available">
+                            <img src="" alt="" class="img-thumbnail img-circle" height="30">
+                        </span>
+                    </div>
+                    
+                    <div>
+                        <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(p)">
+                            <label for="" class="control-label">Quantité</label>
+                            <input type="number" name="quantity"   style="width: 40px;"
+                             [(ngModel)]="p.quantity">
+                            <button>
+                                <img src="" alt="">
+                            </button>
+                        </form>
+                    </div>
+
+
+
 
                 </div>
             </div>
