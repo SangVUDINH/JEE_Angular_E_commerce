@@ -1,3 +1,4 @@
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { CatalogueService } from '../services/catalogue.service';
@@ -8,55 +9,109 @@ import { CatalogueService } from '../services/catalogue.service';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+
   public products: any;
+  public editPhoto: boolean = false;
+  public currentProduct: any;
+  private selectedFiles: any;
+  public progess: number = 0;
+  private currentFileUpload: any;
+
+  title: string | undefined;
 
   constructor(private catalogueService: CatalogueService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-    ){    
-     }
+  ) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.router.events.subscribe(
       value => {
-       if (value instanceof NavigationEnd ){
-         let url = value.url;
-         console.log(url);
+        if (value instanceof NavigationEnd) {
+          let url = value.url;
+          let p1 = this.activatedRoute.snapshot.params.p1;
+          if (p1 == 1) {
 
-         let p1 = this.activatedRoute.snapshot.params.p1;
+            this.title = "Selection";
+            this.getProducts("/products/search/selectedProducts");
+            console.log("SELECTED products");
+          }
 
-         console.log("P1 :"+p1);         
-         if (p1 == 1){
-           this.getProducts("/products/search/selectedProducts");
-           console.log("SELECTED products");
-         }
-         
-         if (p1 ==2){
-           let idCategory = this.activatedRoute.snapshot.params.p2;
-           this.getProducts('/categories/'+idCategory+'/products');
-           console.log("CATEGORY products");
-         }
-       }       
+          else if (p1 == 2) {
+            this.title = "Category";
+            let idCategory = this.activatedRoute.snapshot.params.p2;
+            this.getProducts('/categories/' + idCategory + '/products');
+            console.log("CATEGORY products");
+          }
+
+          else if (p1 == 3) {
+            this.title = "Promotion";
+            this.getProducts('/products/search/promoProducts');
+            console.log("PROMO products");
+          }
+
+          else if (p1 == 4) {
+            this.title = "Disponible";
+            this.getProducts('/products/search/dispoProducts');
+            console.log("DISPO products");
+          }
+
+          else if (p1 == 5) {
+            this.title="Rercherche ...";
+          }
+        }
       }
     );
 
     let p1 = this.activatedRoute.snapshot.params.p1;
-         console.log("P1 :"+p1);         
-         if (p1 == 1){
-           this.getProducts("/products/search/selectedProducts");
-           console.log("SELECTED products");
-         }
+    console.log("P1 :" + p1);
+    if (p1 == 1) {
+      this.getProducts("/products/search/selectedProducts");
+      console.log("SELECTED products");
+    }
   }
 
-  getProducts(url:string) {
+  getProducts(url: string) {
     this.catalogueService.getResource(url).subscribe
-    (
-      data=>{
-        this.products = data;
+      (
+        data => {
+          this.products = data;
+        }, error => {
+          console.log(error);
+        }
+      );
+  }
+
+  onEditPhoto(p: any) {
+    this.currentProduct = p;
+    this.editPhoto = true;
+  }
+
+  onSelectedFile(event: any) {
+    this.selectedFiles = event.target.files;
+  }
+
+  uploadPhoto() {
+    this.progess = 0;
+    // on upload le 1 premier fichier
+    this.currentFileUpload = this.selectedFiles.item(0);
+
+    this.catalogueService.uploadPhoto(this.currentFileUpload, this.currentProduct.id).subscribe
+      (event => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.progess = Math.round(100 * event.loaded / event.total);
+        }
+        else if (event instanceof HttpResponse) {
+          // to do la MAJ le product en particulier
+          this.getProducts("/products/search/selectedProducts");
+
+        }
       }, error => {
-        console.log(error);
+        alert('probleme de chargement !');
       }
-    );
+      );
+
+    this.selectedFiles = undefined;
   }
 
 }

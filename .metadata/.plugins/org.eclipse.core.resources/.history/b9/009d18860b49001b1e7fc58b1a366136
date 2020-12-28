@@ -41,7 +41,7 @@ public class CatalogueController {
 		Product p = productRepository.findById(id).get();
 		p.setPhotoName(id+".jpg"); // on enregistre le nom photo avec id afin avoir un unique nom
 		
-		Files.write(Paths.get(System.getProperty("user.home")+"/ecom/products/"+p.getPhotoName()), file.getBytes());
+		Files.write(Paths.get(System.getProperty("user.home")+"ecom/products/"+p.getPhotoName()), file.getBytes());
 		
 		productRepository.save(p);
 	}
