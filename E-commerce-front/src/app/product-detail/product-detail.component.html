@@ -1,0 +1,66 @@
+<div *ngIf="currentProduct">
+    <div class="panel panel-default" *ngIf="mode == 0">
+        <div class="panel-heading">Fiche Produit : {{currentProduct.name}}
+            <span class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="col-md-5">
+                <img class="img-thumbnail img-rounded btn" height="150"
+                    src="{{getHost()+'/photoProduct/'+currentProduct.id+'?ts='+getTS()}}" alt="">
+                <div *ngIf="isAdmin()">
+                    <p>
+                        <button (click)="onEditPhoto(currentProduct)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </p>
+                    <p *ngIf="editPhoto && currentProduct">
+                        <input type="file" (change)="onSelectedFile($event)">
+                        <button class="btn btn-success" (click)="uploadPhoto()">Upload</button>
+                        {{progess}}
+                    </p>
+                </div>
+
+                <div>
+                    <span *ngIf="currentProduct.promotion">
+                        <img src="" alt="" class="img-thumbnail img-circle" height="30">
+                    </span>
+    
+                    <span *ngIf="currentProduct.selected">
+                        <img src="" alt="" class="img-thumbnail img-circle" height="30">
+                    </span>
+    
+                    <span *ngIf="currentProduct.available">
+                        <img src="" alt="" class="img-thumbnail img-circle" height="30">
+                    </span>
+                </div>
+    
+                <div>
+                    <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(currentProduct)">
+                        <label for="" class="control-label">Quantité</label>
+                        <input type="number" name="quantity" style="width: 40px;" [(ngModel)]="currentProduct.quantity">
+                        <button>
+                            <img src="" alt="">
+                        </button>
+                    </form>
+                </div>
+    
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <label>{{currentProduct.currentPrice | number:'0.2'}}</label>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                {{currentProduct.description}} DESCRIPTION
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+    </div>
+</div>

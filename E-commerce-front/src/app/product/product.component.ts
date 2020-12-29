@@ -1,6 +1,7 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Product } from '../models/product.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { CatalogueService } from '../services/catalogue.service';
 
@@ -30,47 +31,44 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(
       value => {
-        if (value instanceof NavigationEnd) {
-        
-          let p1 = this.activatedRoute.snapshot.params.p1;
-          if (p1 == 1) {
-
-            this.title = "Selection";
-            this.getProducts("/products/search/selectedProducts");
-            console.log("SELECTED products");
-          }
-
-          else if (p1 == 2) {
-            this.title = "Category";
-            let idCategory = this.activatedRoute.snapshot.params.p2;
-            this.getProducts('/categories/' + idCategory + '/products');
-            console.log("CATEGORY products");
-          }
-
-          else if (p1 == 3) {
-            this.title = "Promotion";
-            this.getProducts('/products/search/promoProducts');
-            console.log("PROMO products");
-          }
-
-          else if (p1 == 4) {
-            this.title = "Disponible";
-            this.getProducts('/products/search/dispoProducts');
-            console.log("DISPO products");
-          }
-
-          else if (p1 == 5) {
-            this.title="Rercherche ...";
-          }
+        if (value instanceof NavigationEnd) {        
+          this.checkRouter();
         }
       }
     );
+    this.checkRouter();
+  }
 
+  checkRouter(){
+    // router peut etre charger apres onInit
     let p1 = this.activatedRoute.snapshot.params.p1;
     console.log("P1 :" + p1);
     if (p1 == 1) {
       this.getProducts("/products/search/selectedProducts");
       console.log("SELECTED products");
+    }
+
+    else if (p1 == 2) {
+      this.title = "Category";
+      let idCategory = this.activatedRoute.snapshot.params.p2;
+      this.getProducts('/categories/' + idCategory + '/products');
+      console.log("CATEGORY products");
+    }
+
+    else if (p1 == 3) {
+      this.title = "Promotion";
+      this.getProducts('/products/search/promoProducts');
+      console.log("PROMO products");
+    }
+
+    else if (p1 == 4) {
+      this.title = "Disponible";
+      this.getProducts('/products/search/dispoProducts');
+      console.log("DISPO products");
+    }
+
+    else if (p1 == 5) {
+      this.title="Rercherche ...";
     }
   }
 
@@ -130,8 +128,14 @@ export class ProductComponent implements OnInit {
     return this.authentificationService.isAdmin();
   }
 
-  onAddProductToCaddy(p:any){
+  onAddProductToCaddy(p:Product){
 
+  }
+
+  onProductDetails(p:Product){
+    // transforme en base 64
+    let url = btoa(p._links.product.href);
+    this.router.navigateByUrl('product-details/'+url);
   }
   
 

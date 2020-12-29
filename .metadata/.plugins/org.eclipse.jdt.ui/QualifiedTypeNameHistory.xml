@@ -14,4 +14,6 @@
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="org.springframework.data.rest.core.config.RepositoryRestConfiguration"/>
 <fullyQualifiedTypeName name="org.springframework.web.multipart.MultipartFile"/>
+<fullyQualifiedTypeName name="java.beans.Transient"/>
+<fullyQualifiedTypeName name="javax.persistence.Transient"/>
 </qualifiedTypeNameHistroy>

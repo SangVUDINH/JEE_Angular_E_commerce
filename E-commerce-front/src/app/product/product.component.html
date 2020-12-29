@@ -4,12 +4,13 @@
     </div>
     <div *ngFor="let p of products._embedded.products">
         <div class="col-md-6">
-            <div class="panel panel-default">
+            <div class="panel panel-default heighted">
                 <div class="panel-heading">
                     {{p.name}}
                 </div>
                 <div class="panel-body">
                     <img class="img-thumbnail img-rounded btn" height="150"
+                        (click)="onProductDetails(p)"
                         src="{{getHost()+'/photoProduct/'+p.id+'?ts='+getTS()}}" alt="">
                     <div *ngIf="isAdmin()">
                         <p>
@@ -48,15 +49,12 @@
                         <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(p)">
                             <label for="" class="control-label">Quantité</label>
                             <input type="number" name="quantity"   style="width: 40px;"
-                             [(ngModel)]="p.quantity">
+                                [(ngModel)]="p.quantity">
                             <button>
                                 <img src="" alt="">
                             </button>
                         </form>
                     </div>
-
-
-
 
                 </div>
             </div>
