@@ -7,7 +7,7 @@ import { Product } from '../models/product.model';
   providedIn: 'root'
 })
 export class CatalogueService {
-
+  
   public host: string = "http://localhost:8080";
 
   // Injection de dépendance
@@ -33,5 +33,10 @@ export class CatalogueService {
     return this.http.get<Product>( url);
 
   }
+
+  public patchResource(url: string,data: any){
+    return this.http.patch(url,data);
+  }
+
 
 }

@@ -15,7 +15,7 @@ export class ProductDetailComponent implements OnInit {
   public mode:number = 0;
   public products: any;
   public editPhoto: boolean = false;
-  public currentProduct: Product | undefined;
+  public currentProduct: Product;
   private selectedFiles: any;
   public progess: number = 0;
   private currentFileUpload: any;
@@ -91,7 +91,16 @@ export class ProductDetailComponent implements OnInit {
   }
 
 
-  onUpdateProduct(){
-
+  onUpdateProduct(data){
+    let url=this.currentProduct._links.self.href;
+    this.catalogueService.patchResource(url,data).subscribe(
+      d=>{
+        this.currentProduct=d;
+        this.mode=0;
+      },(error: any) =>{
+        console.log(error);
+        
+      }
+    );
   }
 }

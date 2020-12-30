@@ -70,7 +70,6 @@ export class AuthenticationService {
   }
 
   public removeTokenFromLocalStorage(){
-
     localStorage.removeItem('authUserToken');
     this.clearAuthen();
   }

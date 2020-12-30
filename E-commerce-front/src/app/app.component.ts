@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
+import { CaddyService } from './services/caddy.service';
 import { CatalogueService } from './services/catalogue.service';
 
 @Component({
@@ -8,14 +9,17 @@ import { CatalogueService } from './services/catalogue.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements OnInit{
 
   public  categories:any;
   public currentCategory:any;
 
-  constructor(private catalogueService: CatalogueService
-    , private router: Router,
-    private authenticationService:AuthenticationService){
+  constructor(private catalogueService: CatalogueService,
+    private router: Router,
+    private authenticationService:AuthenticationService,
+    public caddyService:CaddyService
+    ){
     
   }
 
@@ -59,5 +63,6 @@ export class AppComponent implements OnInit{
     this.authenticationService.removeTokenFromLocalStorage();
     this.router.navigateByUrl('/login');
   }
+
 }
 

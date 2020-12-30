@@ -9,21 +9,27 @@ import { ProductComponent } from './product/product.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CaddiesComponent } from './caddies/caddies.component';
+import { CommonModule } from '@angular/common';
+import { CaddyService } from './services/caddy.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
     LoginComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    
+    CaddiesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule 
   ],
-  providers: [CatalogueService],
+  providers: [CatalogueService, CaddyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

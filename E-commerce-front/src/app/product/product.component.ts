@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Product } from '../models/product.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { CaddyService } from '../services/caddy.service';
 import { CatalogueService } from '../services/catalogue.service';
 
 @Component({
@@ -18,20 +19,21 @@ export class ProductComponent implements OnInit {
   private selectedFiles: any;
   public progess: number = 0;
   private currentFileUpload: any;
-  private currentTimeStamp: number=0;
+  private currentTimeStamp: number = 0;
 
   title: string | undefined;
 
   constructor(private catalogueService: CatalogueService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private authentificationService:AuthenticationService
+    private authentificationService: AuthenticationService,
+    private caddyService: CaddyService
   ) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(
       value => {
-        if (value instanceof NavigationEnd) {        
+        if (value instanceof NavigationEnd) {
           this.checkRouter();
         }
       }
@@ -39,20 +41,18 @@ export class ProductComponent implements OnInit {
     this.checkRouter();
   }
 
-  checkRouter(){
-    // router peut etre charger apres onInit
+  checkRouter() {
+    // router peut etre charger et rendu apres onInit()
     let p1 = this.activatedRoute.snapshot.params.p1;
-    console.log("P1 :" + p1);
     if (p1 == 1) {
       this.getProducts("/products/search/selectedProducts");
-      console.log("SELECTED products");
     }
 
     else if (p1 == 2) {
       this.title = "Category";
       let idCategory = this.activatedRoute.snapshot.params.p2;
       this.getProducts('/categories/' + idCategory + '/products');
-      console.log("CATEGORY products");
+
     }
 
     else if (p1 == 3) {
@@ -64,11 +64,10 @@ export class ProductComponent implements OnInit {
     else if (p1 == 4) {
       this.title = "Disponible";
       this.getProducts('/products/search/dispoProducts');
-      console.log("DISPO products");
     }
 
     else if (p1 == 5) {
-      this.title="Rercherche ...";
+      this.title = "Rercherche ...";
     }
   }
 
@@ -105,7 +104,7 @@ export class ProductComponent implements OnInit {
         else if (event instanceof HttpResponse) {
           // la MAJ le product en particulier, probleme de cache
           //solution => image ID+ timestamp
-          this.currentTimeStamp= Date.now();
+          this.currentTimeStamp = Date.now();
 
         }
       }, error => {
@@ -116,27 +115,28 @@ export class ProductComponent implements OnInit {
     this.selectedFiles = undefined;
   }
 
-  getTS(){
+  getTS() {
     return this.currentTimeStamp;
   }
 
-  getHost(){
+  getHost() {
     return this.catalogueService.host;
   }
 
-  isAdmin(){
+  isAdmin() {
     return this.authentificationService.isAdmin();
   }
 
-  onAddProductToCaddy(p:Product){
+  onAddProductToCaddy(p: Product) {
+    this.caddyService.addProductToCaddy(p);
 
   }
 
-  onProductDetails(p:Product){
+  onProductDetails(p: Product) {
     // transforme en base 64
     let url = btoa(p._links.product.href);
-    this.router.navigateByUrl('product-details/'+url);
+    this.router.navigateByUrl('product-details/' + url);
   }
-  
+
 
 }
