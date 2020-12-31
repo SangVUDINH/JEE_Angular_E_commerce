@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Caddy } from '../models/caddy.model';
+import { Client } from '../models/client.model';
 import { ProductItem } from '../models/item-product.model';
 import { Product } from '../models/product.model';
 
@@ -40,8 +41,6 @@ export class CaddyService {
       productItem.product = product;
 
       caddy?.items.set(product.id, productItem);
-
-      
       
     }
     this.saveCaddies();
@@ -55,15 +54,31 @@ export class CaddyService {
 
   public getTotal():number{
     let total=0;
-    let items:IterableIterator<ProductItem>=this.getCurrentCaddy().items.values();
+ 
+      let items=this.getCurrentCaddy()?.items.values();
+
+      if (items){
+        for (let pi of items){
+          if(pi && pi.price && pi.quantity ){
+            total += pi.price*pi.quantity;
+          }       
+        }
+      }
+      
     
-    for (let pi of items){
-      total += pi.price*pi.quantity;
-    }
     return total;
   }
 
   public saveCaddies(){
     localStorage.setItem('myCaddies', JSON.stringify(this.caddies));
+  }
+
+  public setClient(client: Client){
+    let currentCaddy = this.getCurrentCaddy();
+    if(currentCaddy){
+      currentCaddy.client =client;
+    }    
+    this.saveCaddies();
+
   }
 }

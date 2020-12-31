@@ -12,6 +12,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CaddiesComponent } from './caddies/caddies.component';
 import { CommonModule } from '@angular/common';
 import { CaddyService } from './services/caddy.service';
+import { ClientComponent } from './client/client.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { CaddyService } from './services/caddy.service';
     LoginComponent,
     ProductDetailComponent,
     
-    CaddiesComponent
+    CaddiesComponent,
+    
+    ClientComponent
   ],
   imports: [
     BrowserModule,

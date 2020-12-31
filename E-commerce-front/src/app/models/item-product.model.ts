@@ -6,6 +6,4 @@ export class ProductItem {
     public quantity: number | undefined;
     public price: number | undefined;
 
-
-
 }
