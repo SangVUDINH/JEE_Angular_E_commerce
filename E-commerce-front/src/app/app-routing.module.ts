@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CaddiesComponent } from './caddies/caddies.component';
 import { ClientComponent } from './client/client.component';
 import { LoginComponent } from './login/login.component';
+import { PaymentComponent } from './payment/payment.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductComponent } from './product/product.component';
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path:'client', component:ClientComponent},
   { path:'products/:p1/:p2', component:ProductComponent},
   { path:'product-details/:url', component:ProductDetailComponent},
+  { path:'payment/:orderID', component:PaymentComponent},
   { path:'', redirectTo:'products/1/0', pathMatch:'full'},  
 
 ];

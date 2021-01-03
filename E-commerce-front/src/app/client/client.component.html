@@ -64,8 +64,8 @@
             <th>Prix</th>
         </tr>
         <tr *ngFor="let p of orderService.order.products">
-            <td>{{p.product.id}}</td>
-            <td>{{p.product.name}}</td>
+            <td>{{p.product!.id}}</td>
+            <td>{{p.product!.name}}</td>
             <td>{{p.quantity}}</td>
             <td>{{p.price| number:'0.2'}}</td>
         </tr>

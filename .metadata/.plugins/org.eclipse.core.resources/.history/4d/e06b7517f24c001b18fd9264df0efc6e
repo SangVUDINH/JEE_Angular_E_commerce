@@ -1,0 +1,8 @@
+package com.example.light_commerce.dao;
+
+@CrossOrigin("*")
+@RepositoryRestResource
+public interface OrderRepository extends JpaRepository<Order, Long> {
+
+}
+

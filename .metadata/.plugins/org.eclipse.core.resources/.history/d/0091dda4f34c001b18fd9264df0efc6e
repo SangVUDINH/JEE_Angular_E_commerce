@@ -1,0 +1,8 @@
+package com.example.light_commerce.web;
+
+@Data
+class OrderProduct{
+    private Long id;
+    private int quantity;
+
+}

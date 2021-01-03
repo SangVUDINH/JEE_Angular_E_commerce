@@ -1,0 +1,10 @@
+package com.example.light_commerce.web;
+
+import lombok.Data;
+
+@Data
+class OrderProduct{
+    private Long id;
+    private int quantity;
+
+}

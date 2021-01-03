@@ -1,0 +1,5 @@
+package com.example.light_commerce.entities;
+
+public class Order {
+
+}

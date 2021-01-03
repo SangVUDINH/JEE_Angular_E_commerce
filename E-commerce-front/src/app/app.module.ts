@@ -13,6 +13,7 @@ import { CaddiesComponent } from './caddies/caddies.component';
 import { CommonModule } from '@angular/common';
 import { CaddyService } from './services/caddy.service';
 import { ClientComponent } from './client/client.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { ClientComponent } from './client/client.component';
     
     CaddiesComponent,
     
-    ClientComponent
+    ClientComponent,
+    
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+package com.example.light_commerce.entities;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Payment {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Date datePayement;
+    private long cardNumber;
+    private String cardType;
+    
+    @OneToOne(mapped ="payement")
+    @JsonProperty( access = JsonProperty.Access.WRITE_ONLY)
+    private Order order;
+}
