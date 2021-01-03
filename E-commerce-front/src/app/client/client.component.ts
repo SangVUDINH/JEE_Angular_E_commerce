@@ -32,7 +32,6 @@ export class ClientComponent implements OnInit {
 
   onSaveClient(client:Client) {
     client.username=this.authentificationService.userAuthenticated.username;
-    
 
     // SI j'utilise 2WAYs bindign [(ngModel)] je n'ai pas besoin de faire un MAJ    
     //this.caddyService.setClient(client);
