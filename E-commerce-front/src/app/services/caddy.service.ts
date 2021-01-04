@@ -11,6 +11,7 @@ export class CaddyService {
 
   public caddies:Map<string,Caddy>= new Map();
   public currentCaddyName:string="Caddy1";
+  public caddyNum:number = 1;
 
   constructor() { 
     /*
@@ -24,7 +25,7 @@ export class CaddyService {
 
     let caddy = new Caddy(this.currentCaddyName);
     this.caddies.set(this.currentCaddyName,caddy);
-      
+    this.caddyNum++;
   }
 
   public addProductToCaddy(product:Product){
@@ -64,8 +65,6 @@ export class CaddyService {
           }       
         }
       }
-      
-    
     return total;
   }
 
@@ -80,5 +79,15 @@ export class CaddyService {
     }    
     this.saveCaddies();
 
+  }
+
+  public addNewCaddy(){
+    let caddy = new Caddy("Caddy"+this.caddyNum);
+    this.caddies.set("Caddy"+this.caddyNum,caddy);
+    this.caddyNum++;
+  }
+
+  public suppCaddy(caddyName:string){
+    this.caddies.delete(caddyName);
   }
 }

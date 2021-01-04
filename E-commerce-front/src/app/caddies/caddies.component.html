@@ -2,31 +2,45 @@
 <div class="panel panel-default">
     <div class="panel-heading">Caddies</div>
     <div class="panel-body">
-        <table class="table table-bordered">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
+        <ul class="nav nav-pills">
+            <li>
+                <button (click)="onAddCaddy()" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-plus pull-right"></span>
+                </button>
+            </li>
+            <li [ngClass]="c.key==caddyService.currentCaddyName?'active':''" *ngFor="let c of caddies | keyvalue">
+                <a class="btn" (click)="onSelectCaddy(c.key)">{{c.key}}</a>
+            </li>
+        </ul>
 
-            <tr *ngFor="let pi of this.currentCaddy.items.values()">
-                <td>{{pi.product.id}}</td>
-                <td>{{pi.product.name}}</td>
-                <td>{{pi.quantity}}</td>
-                <td>{{pi.price}}</td>
-                <td>
-                    <button class="btn btn-danger" (click)="onRemoveProductFromCaddy(pi)">
-                        <span   class="glyphicon glyphicon-remove"></span>                  
-                    </button>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="3">Total:</td>
-                <td>{{caddyService.getTotal()}}</td>
-            </tr>
-        </table>
-        <button class="btn btn-success" (click)="onNewOrder()">Commander</button>
+        <div *ngIf="this.currentCaddy.items"> 
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+    
+                <tr *ngFor="let pi of this.currentCaddy.items.values()">
+                    <td>{{pi.product.id}}</td>
+                    <td>{{pi.product.name}}</td>
+                    <td>{{pi.quantity}}</td>
+                    <td>{{pi.price}}</td>
+                    <td>
+                        <button class="btn btn-danger" (click)="onRemoveProductFromCaddy(pi)">
+                            <span   class="glyphicon glyphicon-remove"></span>                  
+                        </button>
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td colspan="3">Total:</td>
+                    <td>{{caddyService.getTotal()}}</td>
+                </tr>
+            </table>
+        </div>
+       
+        <button class="btn btn-success" (click)="onNewOrder()">Commander</button>        
     </div>
 </div>

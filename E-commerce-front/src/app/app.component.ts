@@ -14,7 +14,6 @@ export class AppComponent implements OnInit{
 
   public  categories:any;
   public currentCategory:any;
-  public currentCaddy:any;
 
   constructor(private catalogueService: CatalogueService,
     private router: Router,
@@ -28,8 +27,6 @@ export class AppComponent implements OnInit{
     this.getCategories();
     this.router.navigateByUrl('/products/1/0');
     this.authenticationService.loadAuthenticatedUserFromLocalStorage();
-
-    this.currentCaddy = this.caddyService.getCurrentCaddy();
   }
 
   getCategories() {

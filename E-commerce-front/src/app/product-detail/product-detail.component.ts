@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../models/product.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { CaddyService } from '../services/caddy.service';
 import { CatalogueService } from '../services/catalogue.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(private route:ActivatedRoute,
     private catalogueService: CatalogueService,
-    private authenticationService:AuthenticationService
+    private authenticationService:AuthenticationService,
+    private caddyService: CaddyService
     ) { }
 
     
@@ -87,7 +89,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onAddProductToCaddy(currentProduct:Product){
-
+    this.caddyService.addProductToCaddy(currentProduct);
   }
 
 
