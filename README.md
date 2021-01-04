@@ -1,9 +1,9 @@
 # JEE_Angular_JWT_E_commerce
 
  front:
-  npm install
+  npm install, 
   ng serve
   
  back:
-  maven install
+  maven install,
   launch spring boot app
