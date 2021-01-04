@@ -22,13 +22,13 @@
                     <th>Price</th>
                 </tr>
     
-                <tr *ngFor="let pi of this.currentCaddy.items.values()">
-                    <td>{{pi.product.id}}</td>
-                    <td>{{pi.product.name}}</td>
-                    <td>{{pi.quantity}}</td>
-                    <td>{{pi.price}}</td>
+                <tr *ngFor="let pi of this.currentCaddy.items| keyvalue">
+                    <td>{{pi.value.product.id}}</td>
+                    <td>{{pi.value.product.name}}</td>
+                    <td>{{pi.value.quantity}}</td>
+                    <td>{{pi.value.price}}</td>
                     <td>
-                        <button class="btn btn-danger" (click)="onRemoveProductFromCaddy(pi)">
+                        <button class="btn btn-danger" (click)="onRemoveProductFromCaddy(pi.value)">
                             <span   class="glyphicon glyphicon-remove"></span>                  
                         </button>
                     </td>
