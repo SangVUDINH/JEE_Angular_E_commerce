@@ -13,7 +13,7 @@
             </li>
         </ul>
 
-        <div *ngIf="this.currentCaddy.items"> 
+        <div *ngIf="this.currentCaddy!.items"> 
             <table class="table table-bordered">
                 <tr>
                     <th>ID</th>
@@ -22,11 +22,11 @@
                     <th>Price</th>
                 </tr>
     
-                <tr *ngFor="let pi of this.currentCaddy.items| keyvalue">
-                    <td>{{pi.value.product.id}}</td>
-                    <td>{{pi.value.product.name}}</td>
-                    <td>{{pi.value.quantity}}</td>
-                    <td>{{pi.value.price}}</td>
+                <tr *ngFor="let pi of this.currentCaddy!.items| keyvalue">
+                    <td>{{pi.value.product!.id}}</td>
+                    <td>{{pi.value.product!.name}}</td>
+                    <td>{{pi.value!.quantity}}</td>
+                    <td>{{pi.value!.price}}</td>
                     <td>
                         <button class="btn btn-danger" (click)="onRemoveProductFromCaddy(pi.value)">
                             <span   class="glyphicon glyphicon-remove"></span>                  

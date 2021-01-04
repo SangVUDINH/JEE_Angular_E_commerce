@@ -12,7 +12,7 @@ import { CaddyService } from '../services/caddy.service';
 })
 export class CaddiesComponent implements OnInit {
   public caddies:Map<string,Caddy>= new Map();
-  public currentCaddy:any;
+  public currentCaddy:Caddy | undefined;
   
   constructor(public caddyService : CaddyService, 
     private authenticationService:AuthenticationService,
@@ -27,7 +27,7 @@ export class CaddiesComponent implements OnInit {
   }
 
   onRemoveProductFromCaddy(pi:ProductItem){
-    if(pi.product){
+    if(pi.product && this.currentCaddy){
       this.currentCaddy.items.delete(pi.product.id);
     }    
   }
@@ -42,8 +42,11 @@ export class CaddiesComponent implements OnInit {
 
   onSelectCaddy(caddyName:string){
     this.caddyService.currentCaddyName= caddyName;
-    this.currentCaddy=this.caddyService.getCurrentCaddy();
-    
+    this.currentCaddy=this.caddyService.getCurrentCaddy();    
+  }
+
+  getValuesMap(map:any){   
+      return Array.from(map.values());
   }
   
 }
